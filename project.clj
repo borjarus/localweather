@@ -4,8 +4,11 @@
                  [reagent "0.6.0"]
                  [re-frame "0.9.2"]
                  [re-frisk "0.3.2"]
+                 [re-com "0.9.0"]
                  [garden "1.3.2"]
-                 [ns-tracker "0.3.0"]]
+                 [ns-tracker "0.3.0"]
+                 [binaryage/devtools "0.9.4"]
+                 [cljs-ajax "0.5.9"]]
 
   :plugins [[lein-cljsbuild "1.1.4"]
             [lein-garden "0.2.8"]]

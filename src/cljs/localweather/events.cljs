@@ -6,3 +6,9 @@
  :initialize-db
  (fn  [_ _]
    db/default-db))
+
+
+(re-frame/reg-event-db
+ :save-current-weather
+ (fn  [db [_ res]]
+   (assoc-in db [:current-weather] res)))

@@ -5,13 +5,15 @@
               [localweather.events]
               [localweather.subs]
               [localweather.views :as views]
-              [localweather.config :as config]))
+              [localweather.config :as config]
+              [devtools.core :as devtools]))
 
 
 (defn dev-setup []
   (when config/debug?
     (enable-console-print!)
     (enable-re-frisk!)
+    (devtools/install! [:formatters :hints :async])
     (println "dev mode")))
 
 (defn mount-root []
