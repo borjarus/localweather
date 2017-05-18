@@ -1,4 +1,5 @@
 (ns localweather.views
+  (:require-macros [localweather.macros :refer [cf-toggle]])
   (:require [re-frame.core :as re-frame]
             [ajax.core :refer [GET]]
             goog.string.format
@@ -44,7 +45,6 @@
             7 {:day :wi-day-fog :night :wi-night-fog}
             8 {:day :wi-day-cloudy :night :wi-night-cloudy})))
 
-(get-weather-status 210)
 
 (defn main-panel []
   (let [cw (re-frame/subscribe [:get-current-weather])]
@@ -52,7 +52,8 @@
       (let [city (:name @cw)
             temp_c (str (.toFixed (k->c (get-in @cw [:main :temp])) 1) "°C")
             temp_f (str (.toFixed (k->f (get-in @cw [:main :temp])) 1) "°F")
-            {:keys [id description]} (first (get-in @cw [:weather]))]
+            {:keys [id description]} (first (get-in @cw [:weather]))
+            temp-type @(re-frame/subscribe [:get-temp-type])]
         [re-com/h-box
          :children
          [
@@ -60,8 +61,19 @@
           [re-com/box
            :size "auto"
            :child
-           [:div (str "Dziś " current-day-formatted " w " city
-                      " jest " temp_c " stopni")
-            [:span {:class (str "wi " (name (:day (get-weather-status id)))) :title description}]]]
+           [:div
+            [:div "Dziś "
+             [:b current-day-formatted]
+             " w "
+             [:b city]]
+            [:div  " jest "
+                   [:b (cf-toggle temp-type temp_c temp_f)]
+                         " stopni"]
+            (if-not (nil? id)
+              [:div
+               [:span.weather-status {:class (str "wi " (name (:day (get-weather-status id)))) :title description}]])
+            [:div
+             [re-com/button :label (str "Change to " (cf-toggle temp-type "°F" "°C"))
+              :on-click #(re-frame/dispatch [:change-temp-type])]]]]
           [re-com/box :child " " :size "auto"]]]
         ))))

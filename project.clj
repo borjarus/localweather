@@ -15,7 +15,7 @@
 
   :min-lein-version "2.5.3"
 
-  :source-paths ["src/clj"]
+  :source-paths ["src/clj" "src/cljc"]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"
                                     "resources/public/css"]
@@ -42,7 +42,7 @@
   :cljsbuild
   {:builds
    [{:id           "dev"
-     :source-paths ["src/cljs"]
+     :source-paths ["src/cljs" "src/cljc"]
      :figwheel     {:on-jsload "localweather.core/mount-root"}
      :compiler     {:main                 localweather.core
                     :output-to            "resources/public/js/compiled/app.js"
@@ -54,7 +54,7 @@
                     }}
 
     {:id           "min"
-     :source-paths ["src/cljs"]
+     :source-paths ["src/cljs" "src/cljc"]
      :compiler     {:main            localweather.core
                     :output-to       "resources/public/js/compiled/app.js"
                     :optimizations   :advanced

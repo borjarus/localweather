@@ -2,5 +2,6 @@
   (:require [garden.def :refer [defstyles]]))
 
 (defstyles screen
-  [:body {:color "red"}]
+  [:.weather-status {:font-size "3em"
+                     :padding "15px 0"}]
 )
